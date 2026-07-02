@@ -514,7 +514,9 @@ function App() {
 
 				// Store the original image in the folder
 				const originalExt = file.name.split('.').pop() || 'jpg';
-				imageFolder?.file(`${imageName}.${originalExt}`, file);
+				// Also store the name of the image file so it can be accessed later
+				const boardImageFileName = `${imageName}.${originalExt}`;
+				imageFolder?.file(boardImageFileName, file);
 
 				// Load the image for this iteration if it's not the current one
 				let imageToProcess = image;
@@ -619,9 +621,16 @@ function App() {
 						}
 					}
 				}
-
 				// Add the JSON file to the image's folder
-				imageFolder?.file('annotations.json', JSON.stringify(annotationsData, null, 2));
+				const exportPayload = {
+    				board: {
+						image: boardImageFileName, 
+						tileCount: annotationsData.length,
+						// Doesn't cover all fields yet (description, created by)
+					},
+					annotations: annotationsData
+				};
+				imageFolder?.file('annotations.json', JSON.stringify(exportPayload, null, 2));
 			}
 
 			// setCurrentExportStep('Generating ZIP file...');
