@@ -418,7 +418,19 @@ export class ToolSystem {
      * @param canvasRect Canvas dimensions (for coordinate conversion)
      */
     handleMouseDown(button: number, position: { x: number, y: number }, canvasRect: DOMRect) {
-        if (this.currentTool) this.currentTool.onMouseDown(button, position, canvasRect);
+        if (button === 2) {
+            const deleteTool = this.tools.find(tool => tool.name === "Delete");
+    
+            if (deleteTool instanceof DeleteTool) {
+                deleteTool.execute();
+            }
+    
+            return;
+        }
+    
+        if (this.currentTool) {
+            this.currentTool.onMouseDown(button, position, canvasRect);
+        }
     }
 
     /**

@@ -222,6 +222,9 @@ const Canvas: React.FC<CanvasProps> = (props) => {
             onScroll={(e) => {
                 e.preventDefault();
             }}
+            onContextMenu={(e) => {
+                e.preventDefault();
+            }}
             onKeyDown={(e) => {
                 toolSystem.handleKeyDown(e);
             }}
