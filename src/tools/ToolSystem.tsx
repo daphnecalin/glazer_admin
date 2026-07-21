@@ -22,6 +22,7 @@ import { useTranslation } from "react-i18next";
 export class ToolSystem {
     tools: ToolBase[] = [];
     currentTool: ToolBase | null = null;
+    previousTool: ToolBase | null = null;
     annotations: { [imageIndex: number]: { [annotationId: string]: Annotation } };
     currentImageIndex: number;
     selectedAnnotationIDs: string[];
@@ -391,6 +392,16 @@ export class ToolSystem {
      */
     handleKeyDown(event: React.KeyboardEvent<HTMLCanvasElement>) {
         const key = event.key.toLowerCase();
+        if (key === " " && !event.repeat) {
+            const panTool = this.tools.find(tool => tool.name === "Pan");
+        
+            if (panTool && this.currentTool !== panTool) {
+                this.previousTool = this.currentTool;
+                this.setCurrentTool(panTool);
+            }
+        
+            event.preventDefault();
+        }
         if (this.keybindMap[key]) {
             const toolName = this.keybindMap[key];
             const tool = this.tools.find(t => t.name === toolName);
@@ -452,6 +463,14 @@ export class ToolSystem {
      * @param event 
      */
     handleKeyUp(event: React.KeyboardEvent<HTMLCanvasElement>) {
+        const key = event.key.toLowerCase();
+    
+        if (key === " " && this.previousTool) {
+            this.setCurrentTool(this.previousTool);
+            this.previousTool = null;
+            event.preventDefault();
+        }
+    
         if (this.currentTool) this.currentTool.onKeyUp(event);
     }
 }
