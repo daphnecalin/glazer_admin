@@ -9,7 +9,7 @@ import PanTool from './custom/PanTool';
 import SelectorTool from './custom/SelectorTool';
 import DeleteTool from './custom/DeleteTool';
 //import UndoTool from './custom/UndoTool';
-import { TriangleRightIcon, TrashIcon } from '@radix-ui/react-icons';
+import { TrashIcon } from '@radix-ui/react-icons';
 import React, { type SetStateAction } from 'react';
 import { ConfigManager } from './config_manager';
 import i18n from '../tools/i18n';
@@ -480,24 +480,6 @@ export const ToolButton = ({ tool, selected, onClick }: { tool: ToolBase, select
             onClick={onClick}
         >
             <Icon width={24} height={24} className='text-light' />
-            {selected && (
-                <span
-                    style={{
-                        position: 'absolute',
-                        right: -2,
-                        bottom: -2,
-                        color: 'var(--color-light)',
-                        pointerEvents: 'none',
-                        userSelect: 'none',
-                        transform: 'rotate(45deg)', // <-- Add this line
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <TriangleRightIcon />
-                </span>
-            )}
         </button>
     );
 };
