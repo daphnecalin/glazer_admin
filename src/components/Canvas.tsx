@@ -226,7 +226,7 @@ const Canvas: React.FC<CanvasProps> = (props) => {
                 toolSystem.handleKeyDown(e);
             }}
             onKeyUp={(e) => {
-                toolSystem.handleKeyDown(e);
+                toolSystem.handleKeyUp(e);
             }}
             onMouseLeave={(e) => {
                 setMousePos(null)
